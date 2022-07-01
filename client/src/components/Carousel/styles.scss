@@ -5,6 +5,7 @@
     display: grid;
     grid-template-columns: 1fr 10fr 1fr;
     height: 8em;
+    overflow: hidden;
 }
 
 .left {
@@ -20,10 +21,10 @@
     justify-content: flex-start;
     padding: $box-padding;
     gap: 1.5em;
+    height: 100%;
     max-width: 80vw;
     min-width: 80vw;
     overflow-x: scroll;
-    overflow-y: hidden;
     position: relative;
 }
 

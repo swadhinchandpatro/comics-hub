@@ -5,6 +5,7 @@ import Carousel from './components/Carousel';
 import Comics from './components/Comics';
 import { ReactQueryDevtools } from 'react-query/devtools'
 import ComicsWithFilter from './components/ComicsWIthFilter'
+import SearchBar from './components/SearchBar';
 
 const queryClient = new QueryClient()
 
@@ -41,7 +42,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <header className="App-header">
-          
+          <div className='marvel-logo'/>
+          <SearchBar />
         </header>
         <SuperHeroContext.Provider value={{ filterHeroes, comicName, filterHeroHandler, setComicHandler}}>
           <Carousel />

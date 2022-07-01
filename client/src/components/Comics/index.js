@@ -6,6 +6,7 @@ import './styles.scss'
 import { SuperHeroContext } from '../../App';
 import ComicsCard from '../ComicsCard';
 import Pagination from '../Pagination';
+import { DEFAULT_LIMIT } from '../../constants';
 
 function Comics() {
     const [offset, setoffset] = useState(0);
@@ -34,7 +35,7 @@ function Comics() {
                     return <ComicsCard key={v4()} id={comic.id} thumbnail={comic.thumbnail} title={comic.title} />
                 })}
             </div>
-            <Pagination total={totalCount.current} pageNo={offset}/>
+            { totalCount.current > DEFAULT_LIMIT && !isLoading && <Pagination total={totalCount.current} pageNo={offset} limit={DEFAULT_LIMIT} setOffset={setoffset}/>}
         </div>
     )
 }

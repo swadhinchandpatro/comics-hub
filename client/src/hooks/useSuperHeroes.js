@@ -10,8 +10,8 @@ const joinQueryParams = (query) => {
 const fetchCharacters = (params) => {
     return axios.get(`/fetch-characters${params}`)
 }
-const fetchComics = () => {
-    return axios.get('/fetch-comics')
+const fetchComics = (params) => {
+    return axios.get(`/fetch-comics${params}`)
 }
 
 const fetchComicsByCharacter = (id, params) => {
@@ -20,7 +20,7 @@ const fetchComicsByCharacter = (id, params) => {
 
 export const useCharacters = (options) => {
     const { queryParams, ...rest } = options
-    return useQuery("super-heroes", () => fetchCharacters(joinQueryParams(queryParams)), {
+    return useQuery(["super-heroes", joinQueryParams(queryParams)], () => fetchCharacters(joinQueryParams(queryParams)), {
         ...rest,
         staleTime: 300000 // fresh for 5mins
     })
@@ -29,15 +29,16 @@ export const useCharacters = (options) => {
 export const useComicsByCharacters = (ids, queryParams) => {
     return useQueries(ids.map(id => {
         return {
-            queryKey: ['comic-by-character', id],
+            queryKey: ['comic-by-character', id, joinQueryParams(queryParams)],
             queryFn: () => fetchComicsByCharacter(id, joinQueryParams(queryParams))
         }
     }))
 }
 
 export const useComics = (options, filters) => {
-    return useQuery("comics", fetchComics, {
-        ...options,
-        staleTime: 300000 // fresh for 5mins
+    const { queryParams, ...rest } = options
+    return useQuery(["comics", joinQueryParams(queryParams)], () => fetchComics(joinQueryParams(queryParams)), {
+        ...rest,
+        // staleTime: 300000 // fresh for 5mins
     })
 }

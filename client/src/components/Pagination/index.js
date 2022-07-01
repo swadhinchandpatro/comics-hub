@@ -1,38 +1,58 @@
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './styles.scss'
-export default function Pagination({total, pageNo, setOffset}) {
-    const [page1, setPage1] = useState(0);
-    const [page2, setPage2] = useState(1);
+export default function Pagination({total, pageNo, limit, setOffset}) {
+    const lastPage = parseInt(total/limit)
+    const currentPage = parseInt(pageNo/limit)
+    const diff = lastPage - currentPage;
+    // const [lastPage, setPage2] = useState(lastPage);
     const selectedClass = 'block selected';
     const blockClass = 'block';
     const blockDisabledClass = 'block disabled';
+
+    // useEffect(() => {
+    //     setPage1(0);
+    //     setPage2(lastPage);
+    // }, [total])
+
+    const increment = () => {
+        // setPage1(page => page + 1)
+        setOffset(pageNo + limit);
+    }
+
+    const decrement = () => {
+        // setPage1(page => page - 1)
+        setOffset(pageNo - limit);
+    }
+
+    const updateOffset = (page) => {
+        return pageNo !== page && setOffset(page*limit)
+
+    }
+
     return (
         <div className='pagination'>
-            <div className={ true ? blockDisabledClass : blockClass}>
+            {lastPage > 0 ? (
+                <div onClick={() => decrement()} className={!currentPage ? blockDisabledClass : blockClass}>
                     <FontAwesomeIcon icon={faArrowLeft} color="white" size='sm'/>
                 </div>
-            {/* {total > 0 ? (
-                <div className={ true ? blockDisabledClass : blockClass}>
-                    <FontAwesomeIcon icon={faArrowLeft} color="white" size='sm'/>
-                </div>
-            ) : null} */}
-            {/* {total > 0 && <div className={pageNo === page1 ? selectedClass : blockClass}>{page1}</div>}
-            {total === 2 (
-                <div className={pageNo === page2 ? selectedClass : blockClass}>{page2}</div>
+            ) : null}
+            {lastPage > 0 && <div onClick={() => updateOffset(currentPage)} className={currentPage === currentPage ? selectedClass : blockClass}>{currentPage + 1}</div>}
+            {diff === 1 && (
+                <div onClick={() => updateOffset(lastPage)} className={currentPage === lastPage ? selectedClass : blockClass}>{lastPage + 1}</div>
             )}
-            {total > 2 && (
+            {diff > 1 && (
                 <div className='block'>...</div>
             )}
-            {total > 2 (
-                <div className={pageNo === page1 ? selectedClass : blockClass}>{page2}</div>
-            )} */}
-            {/* {total > 0 (
-                <div className={true ? blockDisabledClass : blockClass}>
+            {diff > 1 && (
+                <div onClick={() => updateOffset(lastPage)} className={currentPage === lastPage ? selectedClass : blockClass}>{lastPage + 1}</div>
+            )}
+            {lastPage > 0 && (
+                <div onClick={() => increment()} className={currentPage === lastPage ? blockDisabledClass : blockClass}>
                     <FontAwesomeIcon icon={faArrowRight} color="white" size='sm'/>
                 </div>
-            )} */}
+            )}
         </div>
     )
 }

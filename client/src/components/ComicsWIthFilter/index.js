@@ -9,36 +9,51 @@ import '../Comics/styles.scss'
 import { SuperHeroContext } from '../../App';
 import ComicsCard from '../ComicsCard';
 import Pagination from '../Pagination';
+import { DEFAULT_LIMIT } from '../../constants';
 
 function ComicsWithFilter() {
     let comics = [];
-    const offset = useRef(0);
+    let [offset, setOffset] = useState(0);
     const totalCount = useRef(0);
     const filterHeroesCount = useRef(0);
 
     const { comicName, filterHeroes, filterHeroHandler } = useContext(SuperHeroContext)
-    const results = useComicsByCharacters(filterHeroes, { limit: 20/filterHeroes.length, offset: filterHeroesCount.current !== filterHeroes.length ? 0 : offset });
+    
+    const limit = parseInt(DEFAULT_LIMIT / filterHeroes.length) * filterHeroes.length
+    const results = useComicsByCharacters(filterHeroes, {
+        limit: parseInt(DEFAULT_LIMIT / filterHeroes.length),
+        offset: filterHeroesCount.current !== filterHeroes.length ? 0 : parseInt(offset / filterHeroes.length)
+    });
     console.log(results);
-   
+
     useEffect(() => {
-        if(comicName) {
+        if (comicName) {
             filterHeroHandler.reset()
         }
     }, [comicName])
 
     useEffect(() => {
-        // refetch()
-    }, [offset, filterHeroes])
+        if(filterHeroesCount.current !== filterHeroes.length) {
+            filterHeroesCount.current = filterHeroes.length
+            setOffset(0)
+        }
+    }, [filterHeroes])
+
+    useEffect(() => {
+        if (offset) {
+            results.forEach(result => {
+                result.refetch()
+            })
+        }
+    }, [offset])
 
     const isLoading = results.some(result => result.isLoading)
 
-    if(!isLoading) {
+    if (!isLoading) {
         console.log('loading stopped');
         console.log(results)
         totalCount.current = 0;
-        if(filterHeroesCount.current !== filterHeroes.length) {
-            filterHeroesCount.current = filterHeroes.length
-        }
+        
         comics = results.reduce((combinedResult, comicsOnHero) => {
             const result = comicsOnHero.data.data.data
             totalCount.current += result.total
@@ -59,7 +74,7 @@ function ComicsWithFilter() {
                     return <ComicsCard key={v4()} id={comic.id} thumbnail={comic.thumbnail} title={comic.title} />
                 })}
             </div>
-            <Pagination total={totalCount} pageNo={offset.current} />
+            {totalCount.current > limit && !isLoading && <Pagination total={totalCount.current} pageNo={offset} limit={limit} setOffset={setOffset} />}
         </div>
     )
 }

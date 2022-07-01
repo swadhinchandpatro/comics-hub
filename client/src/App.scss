@@ -6,3 +6,28 @@
     justify-content: flex-start;
     position: relative;
 }
+
+.App-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5em;
+    width: 100vw;
+    box-shadow:3px 3px 3px #6b1d07;
+    background-color: red;
+    padding: $content-padding;
+}
+
+.marvel-logo {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Marvel_Logo.svg/2560px-Marvel_Logo.svg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 6em;
+    height: 3em;
+    margin-left: 15%;
+}

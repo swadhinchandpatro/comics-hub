@@ -1,0 +1,15 @@
+@import '../../styles/variables.scss';
+
+.comics {
+    padding: $box-padding;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5em;
+}
+
+.comics-container {
+    margin: $content-padding;
+    @extend .center;
+    flex-direction: column;
+    justify-content: flex-start;
+}

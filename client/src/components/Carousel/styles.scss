@@ -1,0 +1,43 @@
+@import '../../styles/variables.scss';
+
+.carousel {
+    margin: $content-padding;
+    display: grid;
+    grid-template-columns: 1fr 10fr 1fr;
+    height: 8em;
+}
+
+.left {
+    @extend .center;
+}
+
+.right {
+    @extend .center;
+}
+
+.carousel-container {
+    @extend .center;
+    justify-content: flex-start;
+    padding: $box-padding;
+    gap: 1.5em;
+    max-width: 80vw;
+    min-width: 80vw;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    position: relative;
+}
+
+.carousel-disabled {
+    pointer-events: none;
+
+    &::before {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        content: '';
+        left: 0;
+        right: 0;
+        top: 0;
+        background-color: rgba(0, 0, 0, 0.33);
+    }
+}

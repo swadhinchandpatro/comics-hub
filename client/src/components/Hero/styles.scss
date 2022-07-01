@@ -1,0 +1,32 @@
+@import '../../styles/variables.scss';
+
+.hero {
+    border-radius: 50%;
+    border: 2px solid $blue;
+    min-height: 6em;
+    min-width: 6em;
+    flex: 1;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 7em;
+    position: relative;
+}
+
+.ticked {
+
+    &::before {
+        @extend .center;
+        position: absolute;
+        border-radius: 50%;
+        height: 100%;
+        width: 100%;
+        font-size: 2em;
+        color: rgb(206, 251, 252);
+        content: '\2713';
+        left: 0;
+        right: 0;
+        top: 0;
+        background-color: $disabled-color;
+    }
+}

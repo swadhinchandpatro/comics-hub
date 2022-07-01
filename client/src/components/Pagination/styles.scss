@@ -1,0 +1,28 @@
+@import '../../styles/variables.scss';
+
+.pagination {
+    @extend .center;
+    margin: 2em auto;
+    gap: 0.7em;
+}
+
+.block {
+    @extend .center;
+    height: 2em;
+    width: 2em;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.selected {
+    color: $orange;
+    border: 1px solid $orange;
+}
+
+.disabled {
+    pointer-events: none;
+    background-color: red;
+}

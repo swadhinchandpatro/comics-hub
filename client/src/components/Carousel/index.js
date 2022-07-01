@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect, useRef, useState } from 'react'
+import React, { memo, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useCharacters } from '../../hooks/useSuperHeroes'
@@ -7,6 +7,7 @@ import { v4 } from 'uuid'
 import './styles.scss'
 import Hero from '../Hero';
 import { SuperHeroContext } from '../../App';
+import { DEFAULT_LIMIT } from '../../constants';
 
 function Carousel() {
     const [offset, setoffset] = useState(0);
@@ -28,6 +29,18 @@ function Carousel() {
             return serverData
         }
     });
+
+    const observer = useRef()
+    const lastCharacterRef = useCallback((node) => {
+        if(isLoading) return
+        if(observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries => {
+            if(entries[0].isIntersecting) {
+                setoffset(offset => offset + DEFAULT_LIMIT)
+            }
+        })
+        if(node) observer.current.observe(node)
+    }, [heroes, isLoading])
 
     useEffect(() => {
         refetch()
@@ -55,10 +68,28 @@ function Carousel() {
             <div className='left'>
                 <FontAwesomeIcon icon={faArrowLeft} color="black" />
             </div>
-            <div className={isLoading ? 'center' : 'carousel-container'}>
-                {heroes && heroes.results?.map(hero => {
+            <div className={'carousel-container'}>
+                {heroes && heroes.results?.map((hero, i) => {
                     const className = filterHeroes.includes(hero.id) ? 'ticked' : ''
-                    return <Hero key={v4()} className={className} onClick={() => selectSuperHero(hero.id)} id={hero.id} thumbnail={hero.thumbnail} />
+                    if(i + 1 === heroes.results.length) {
+                        return (
+                        <Hero
+                            key={v4()}
+                            ref={lastCharacterRef}
+                            className={className}
+                            onClick={() => selectSuperHero(hero.id)}
+                            id={hero.id}
+                            thumbnail={hero.thumbnail} />
+                        )
+                    }
+                    return (
+                    <Hero
+                        key={v4()}
+                        className={className}
+                        onClick={() => selectSuperHero(hero.id)}
+                        id={hero.id}
+                        thumbnail={hero.thumbnail} />
+                    )
                 })}
             </div>
             <div className='right'>

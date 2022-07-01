@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import './styles.scss'
 
-export default function Hero({thumbnail, id, className, onClick}) {
+function Hero({thumbnail, id, className, onClick}, ref) {
     return (
-        <div id={id} className={`hero ${className}`} style={{
+        <div ref={ref} id={id} className={`hero ${className}`} style={{
             backgroundImage: `url(${thumbnail})`
         }} onClick={onClick}>
         </div>
     )
 }
+
+export default forwardRef(Hero)

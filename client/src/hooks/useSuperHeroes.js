@@ -39,6 +39,6 @@ export const useComics = (options, filters) => {
     const { queryParams, ...rest } = options
     return useQuery(["comics", joinQueryParams(queryParams)], () => fetchComics(joinQueryParams(queryParams)), {
         ...rest,
-        // staleTime: 300000 // fresh for 5mins
+        staleTime: 300000 // fresh for 5mins
     })
 }

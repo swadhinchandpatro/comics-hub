@@ -22,11 +22,11 @@
   &__title > p {
     line-height: 1.2em;
     font-weight: bold;
-    margin: 0.7em auto;
+    margin: 0.7em;
   }
 
   &:hover {
     border: 1px solid $border-light;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    box-shadow: 0 3px 10px rgba(135, 231, 240, 0.626);
   }
 }

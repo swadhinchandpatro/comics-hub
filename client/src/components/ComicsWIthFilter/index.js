@@ -53,7 +53,7 @@ function ComicsWithFilter() {
         console.log('loading stopped');
         console.log(results)
         totalCount.current = 0;
-        
+
         comics = results.reduce((combinedResult, comicsOnHero) => {
             const result = comicsOnHero.data.data.data
             totalCount.current += result.total
@@ -68,8 +68,8 @@ function ComicsWithFilter() {
 
     return (
         <div className='comics-container'>
+            {isLoading ? <h1 className='center white'>Loading...</h1> : null}
             <div className='comics'>
-                {isLoading ? <h1>Loading...</h1> : null}
                 {comics?.map(comic => {
                     return <ComicsCard key={v4()} id={comic.id} thumbnail={comic.thumbnail} title={comic.title} />
                 })}

@@ -31,7 +31,7 @@ function Comics() {
 
     return (
         <div className='comics-container'>
-            {isLoading ? <h1 className='center'>Loading...</h1> : null}
+            {isLoading ? <h1 className='center white'>Loading...</h1> : null}
             <div className='comics'>
                 {comics && comics.results?.map(comic => {
                     return <ComicsCard key={v4()} id={comic.id} thumbnail={comic.thumbnail} title={comic.title} />

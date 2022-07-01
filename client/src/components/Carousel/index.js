@@ -66,7 +66,7 @@ function Carousel() {
     return (
         <div className={disabled ? 'carousel carousel-disabled' : 'carousel'}>
             <div className='left'>
-                <FontAwesomeIcon icon={faArrowLeft} color="black" />
+                <FontAwesomeIcon icon={faArrowLeft} color="white" />
             </div>
             <div className={'carousel-container'}>
                 {heroes && heroes.results?.map((hero, i) => {
@@ -93,7 +93,7 @@ function Carousel() {
                 })}
             </div>
             <div className='right'>
-                <FontAwesomeIcon icon={faArrowRight} color="black" />
+                <FontAwesomeIcon icon={faArrowRight} color="white" />
             </div>
         </div>
     )

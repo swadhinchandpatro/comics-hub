@@ -10,19 +10,23 @@
     @extend .center;
     height: 1.7em;
     width: 2.3em;
-    background-color: black;
+    background-color: $dark-blue;
     color: white;
-    border: 1px solid black;
+    border: 1px solid $dark-blue;
     border-radius: 5px;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
     cursor: pointer;
 }
 
 .selected {
     color: $orange;
-    border: 1px solid $orange;
+    font-weight: bold;
+    border: 2px solid $light-orange;
+    cursor: pointer;
 }
 
 .disabled {
     pointer-events: none;
-    background-color: red;
+    background-color: rgb(79, 77, 77);
 }

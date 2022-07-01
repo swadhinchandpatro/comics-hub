@@ -9,6 +9,7 @@ $large: 1000px;
 $xlarge: 1700px;
 
 //colors
+$light-orange: #f4ac71;
 $orange: #fc8019;
 $dark-orange: #5d2f0a;
 // $disabled-color: rgba(0, 0, 0, 0.605);
@@ -20,6 +21,7 @@ $selected: #0f1014;
 $border-light: #0a090941;
 $border-dim: #b1adad41;
 $blue: rgba(27, 75, 220, 0.848);
+$dark-blue: rgba(1, 5, 17, 0.885);
 
 //alignments
 .center {
@@ -73,4 +75,8 @@ $blue: rgba(27, 75, 220, 0.848);
   100% {
     background-position: 1200px 0;
   }
+}
+
+.white {
+  color: white;
 }

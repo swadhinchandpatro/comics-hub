@@ -13,6 +13,7 @@ function Carousel() {
     const [offset, setoffset] = useState(0);
     const [disabled, setDisable] = useState(false);
     const totalCount = useRef(0);
+    const heroToFocus = useRef(10);
     const oldHeroes = useRef({ results: []});
 
     const { comicName, filterHeroes, filterHeroHandler } = useContext(SuperHeroContext)
@@ -63,9 +64,27 @@ function Carousel() {
         }
     }
 
+    const scrollLeft = () => {
+        const newHeroPos = Math.max(0, heroToFocus.current - 10);
+        const view = document.getElementById(heroes.results[newHeroPos]?.id)
+        heroToFocus.current = heroToFocus.current - 6;
+        view.scrollIntoView({
+            behavior: 'smooth'
+        })
+    }
+    
+    const scrollRight = () => {
+        const newHeroPos = Math.min(heroes?.results?.length - 1, heroToFocus.current + 6);
+        const view = document.getElementById(heroes.results[newHeroPos]?.id)
+        heroToFocus.current = newHeroPos;
+        view.scrollIntoView({
+            behavior: 'smooth'
+        })
+    }
+
     return (
         <div className={disabled ? 'carousel carousel-disabled' : 'carousel'}>
-            <div className='left'>
+            <div className='left' onClick={scrollLeft}>
                 <FontAwesomeIcon icon={faArrowLeft} color="white" />
             </div>
             <div className={'carousel-container'}>
@@ -92,7 +111,7 @@ function Carousel() {
                     )
                 })}
             </div>
-            <div className='right'>
+            <div className='right' onClick={scrollRight}>
                 <FontAwesomeIcon icon={faArrowRight} color="white" />
             </div>
         </div>

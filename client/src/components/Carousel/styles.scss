@@ -28,6 +28,8 @@
     overflow-x: scroll;
 }
 
+.carousel-container::-webkit-scrollbar { width: 0 !important }
+
 .carousel-disabled {
     pointer-events: none;
 

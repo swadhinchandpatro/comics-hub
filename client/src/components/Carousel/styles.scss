@@ -6,6 +6,7 @@
     grid-template-columns: 1fr 10fr 1fr;
     height: 8em;
     overflow: hidden;
+    position: relative;
 }
 
 .left {
@@ -25,7 +26,6 @@
     max-width: 80vw;
     min-width: 80vw;
     overflow-x: scroll;
-    position: relative;
 }
 
 .carousel-disabled {
@@ -39,6 +39,7 @@
         left: 0;
         right: 0;
         top: 0;
-        background-color: rgba(0, 0, 0, 0.33);
+        z-index: 999;
+        background-color: rgba(0, 0, 0, 0.54);
     }
 }

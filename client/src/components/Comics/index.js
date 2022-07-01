@@ -14,7 +14,7 @@ function Comics() {
 
     const { comicName } = useContext(SuperHeroContext)
     const { isLoading , data: comics, isError, error, refetch } = useComics({
-        queryParams: { offset: offset},
+        queryParams: comicName ? { offset: offset, title: comicName}: { offset },
         refetchOnMount: false,
         select: (res) => {
             totalCount.current = res.data.data.total
@@ -24,17 +24,20 @@ function Comics() {
     console.log(comics);
 
     useEffect(() => {
-        refetch()
+        if(offset) {
+            refetch()
+        }
     }, [offset])
 
     return (
         <div className='comics-container'>
+            {isLoading ? <h1 className='center'>Loading...</h1> : null}
             <div className='comics'>
-                {isLoading ? <h1>Loading...</h1> : null}
                 {comics && comics.results?.map(comic => {
                     return <ComicsCard key={v4()} id={comic.id} thumbnail={comic.thumbnail} title={comic.title} />
                 })}
             </div>
+            {!isLoading && comics && comics.results && !comics?.results?.length && <h1 className='center'>No Comics Found...</h1>}
             { totalCount.current > DEFAULT_LIMIT && !isLoading && <Pagination total={totalCount.current} pageNo={offset} limit={DEFAULT_LIMIT} setOffset={setoffset}/>}
         </div>
     )

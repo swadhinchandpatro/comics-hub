@@ -1,5 +1,4 @@
 import React, { memo, useContext, useEffect, useRef, useState } from 'react'
-import { useQuery } from 'react-query'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useCharacters } from '../../hooks/useSuperHeroes'
@@ -10,7 +9,6 @@ import Hero from '../Hero';
 import { SuperHeroContext } from '../../App';
 
 function Carousel() {
-    // const [heroes, setHeroes] = useState([]);
     const [offset, setoffset] = useState(0);
     const [disabled, setDisable] = useState(false);
     const totalCount = useRef(0);
@@ -30,12 +28,6 @@ function Carousel() {
             return serverData
         }
     });
-    console.log(heroes);
-    // useEffect(() => {
-    //     if(serverData?.results?.length) {
-    //         setHeroes(heroes => [...heroes, ...serverData.results])
-    //     }
-    // }, [serverData])
 
     useEffect(() => {
         refetch()

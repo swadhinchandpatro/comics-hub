@@ -5,6 +5,22 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1.5em;
+
+    @media (min-width: $small) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    @media (min-width: $medium) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: $large) {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    @media (min-width: $xlarge) {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 
 .comics-container {

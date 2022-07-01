@@ -41,13 +41,13 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
-        <header className="App-header">
-          <div className='marvel-logo'/>
-          <SearchBar />
-        </header>
         <SuperHeroContext.Provider value={{ filterHeroes, comicName, filterHeroHandler, setComicHandler}}>
+          <header className="App-header">
+            <div className='marvel-logo'/>
+            <SearchBar />
+          </header>
           <Carousel />
-          { filterHeroes.length ? <ComicsWithFilter /> : <Comics /> }
+          { filterHeroes.length && !comicName ? <ComicsWithFilter /> : <Comics /> }
         </SuperHeroContext.Provider>
       </div>
       <ReactQueryDevtools initialIsOpem={false}/>

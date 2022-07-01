@@ -11,3 +11,17 @@ export function debounceCharacterFilter(fn, timeout = 500) {
         }, timeout)
     }
 }
+
+export function debounce(fn, timeout = 500) {
+    let inst
+    return (...args) => {
+        if(inst) {
+            clearTimeout(inst)
+        }
+        console.log('called')
+        inst = setTimeout(() => {
+            console.log('executed')
+            fn(...args);
+        }, timeout)
+    }
+}

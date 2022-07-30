@@ -1,8 +1,5 @@
-import React, { memo, useContext, useEffect, useRef, useState } from 'react'
-import { useQuery } from 'react-query'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { useCharacters, useComics, useComicsByCharacters } from '../../hooks/useSuperHeroes'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useComicsByCharacters } from '../../hooks/useSuperHeroes'
 import { v4 } from 'uuid'
 
 import '../Comics/styles.scss'
@@ -14,6 +11,7 @@ import { DEFAULT_LIMIT } from '../../constants';
 function ComicsWithFilter() {
     let comics = [];
     let [offset, setOffset] = useState(0);
+    const [firstPage, setFirstPage] = useState(0);
     const totalCount = useRef(0);
     const filterHeroesCount = useRef(0);
 
@@ -67,16 +65,32 @@ function ComicsWithFilter() {
     }
 
     return (
-        <div className='comics-container'>
-            {isLoading ? <h1 className='center white'>Loading...</h1> : null}
-            <div className='comics'>
-                {comics?.map(comic => {
-                    return <ComicsCard key={v4()} id={comic.id} thumbnail={comic.thumbnail} title={comic.title} />
-                })}
-            </div>
-            {totalCount.current > limit && !isLoading && <Pagination total={totalCount.current} pageNo={offset} limit={limit} setOffset={setOffset} />}
+      <div className="comics-container">
+        {isLoading ? <h1 className="center white">Loading...</h1> : null}
+        <div className="comics">
+          {comics?.map((comic) => {
+            return (
+              <ComicsCard
+                key={v4()}
+                id={comic.id}
+                thumbnail={comic.thumbnail}
+                title={comic.title}
+              />
+            );
+          })}
         </div>
-    )
+        {totalCount.current > limit && !isLoading && (
+          <Pagination
+            firstPage={firstPage}
+            setFirstPage={setFirstPage}
+            total={totalCount.current}
+            pageNo={offset}
+            limit={limit}
+            setOffset={setOffset}
+          />
+        )}
+      </div>
+    );
 }
 
 export default ComicsWithFilter

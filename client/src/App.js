@@ -11,7 +11,7 @@ const queryClient = new QueryClient()
 
 export const SuperHeroContext = createContext();
 
-function App() {
+const SuperHeroProvider = ({ children }) => {
   const [filterHeroes, setFilterHeroes] = useState([]);
   const [comicName, setComicName] = useState('');
 
@@ -38,17 +38,26 @@ function App() {
     reset: () => setFilterHeroes([])
   }
   const setComicHandler = (name) => setComicName(name)
+
+  return (
+    <SuperHeroContext.Provider value={{ filterHeroes, comicName, filterHeroHandler, setComicHandler}}>
+      {children}
+      { filterHeroes.length && !comicName ? <ComicsWithFilter /> : <Comics /> }
+    </SuperHeroContext.Provider>
+  )
+}
+
+function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
-        <SuperHeroContext.Provider value={{ filterHeroes, comicName, filterHeroHandler, setComicHandler}}>
+        <SuperHeroProvider>
           <header className="App-header">
             <div className='marvel-logo'/>
             <SearchBar />
           </header>
           <Carousel />
-          { filterHeroes.length && !comicName ? <ComicsWithFilter /> : <Comics /> }
-        </SuperHeroContext.Provider>
+        </SuperHeroProvider>
       </div>
       <ReactQueryDevtools initialIsOpem={false}/>
     </QueryClientProvider>

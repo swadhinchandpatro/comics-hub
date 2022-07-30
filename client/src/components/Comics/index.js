@@ -10,6 +10,7 @@ import { DEFAULT_LIMIT } from '../../constants';
 
 function Comics() {
     const [offset, setoffset] = useState(0);
+    const [firstPage, setFirstPage] = useState(0);
     const totalCount = useRef(0);
 
     const { comicName } = useContext(SuperHeroContext)
@@ -30,17 +31,36 @@ function Comics() {
     }, [offset])
 
     return (
-        <div className='comics-container'>
-            {isLoading ? <h1 className='center white'>Loading...</h1> : null}
-            <div className='comics'>
-                {comics && comics.results?.map(comic => {
-                    return <ComicsCard key={v4()} id={comic.id} thumbnail={comic.thumbnail} title={comic.title} />
-                })}
-            </div>
-            {!isLoading && comics && comics.results && !comics?.results?.length && <h1 className='center'>No Comics Found...</h1>}
-            { totalCount.current > DEFAULT_LIMIT && !isLoading && <Pagination total={totalCount.current} pageNo={offset} limit={DEFAULT_LIMIT} setOffset={setoffset}/>}
+      <div className="comics-container">
+        {isLoading ? <h1 className="center white">Loading...</h1> : null}
+        <div className="comics">
+          {comics &&
+            comics.results?.map((comic) => {
+              return (
+                <ComicsCard
+                  key={v4()}
+                  id={comic.id}
+                  thumbnail={comic.thumbnail}
+                  title={comic.title}
+                />
+              );
+            })}
         </div>
-    )
+        {!isLoading && comics && comics.results && !comics?.results?.length && (
+          <h1 className="center">No Comics Found...</h1>
+        )}
+        {totalCount.current > DEFAULT_LIMIT && !isLoading && (
+          <Pagination
+            firstPage={firstPage}
+            setFirstPage={setFirstPage}
+            total={totalCount.current}
+            pageNo={offset}
+            limit={DEFAULT_LIMIT}
+            setOffset={setoffset}
+          />
+        )}
+      </div>
+    );
 }
 
 export default Comics
